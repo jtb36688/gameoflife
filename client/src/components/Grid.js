@@ -4,8 +4,7 @@ import Cell from "./Cell";
 class Grid extends React.Component {
   renderCell = i => {
     return (
-      <Cell
-        {/* className={this.props.cellmap(i)} */}
+      <Cell       
         onClick={() => this.props.onClick(i)}
       />
     );
@@ -31,5 +30,5 @@ class Grid extends React.Component {
       )
   }
 }
-
+{/* className={this.props.cellmap(i)} */}
 export default Grid;

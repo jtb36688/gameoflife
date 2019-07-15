@@ -3,9 +3,14 @@
 }
 
 .CellTest {
-  height
+  height: 10px;
+  width: 10px;
+  border: 1px dotted black;
+  float: left;
+  margin: 1px -1px 0 0;
+  padding: 0;
 }
 
 .GridRow {
-
+  display: table;
 }
