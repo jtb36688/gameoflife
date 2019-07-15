@@ -1,25 +1,26 @@
 import React from 'react';
 import './Reset.css';
 import './App.css';
+import Grid from './components/Grid';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+    }
+  }
+
+  clickcell = (i) => {
+    console.log(`Cell ${i} clicked`)
+  }
+
+  render() {  
+    return (
+      <div className="App">
+          <Grid onClick={this.clickcell} />
+      </div>
+    );
+}
 }
 
 export default App;
