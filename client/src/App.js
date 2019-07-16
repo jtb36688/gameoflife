@@ -1,8 +1,10 @@
 import React from 'react';
 import './Reset.css';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Grid from './components/Grid';
 import celldata from './defaultdata.js'
+import { Button } from 'reactstrap';
 
 class App extends React.Component {
   constructor(props) {
@@ -31,7 +33,8 @@ class App extends React.Component {
   render() {  
     return (
       <div className="App">
-          <Grid cellstyling={this.cellstyling} onClick={this.clickcell} />
+        <Grid cellstyling={this.cellstyling} onClick={this.clickcell} />
+        <Button onClick={() => {console.log("Simulation started")}}>Start Simulation</Button>
       </div>
     );
 }
