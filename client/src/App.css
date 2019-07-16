@@ -2,7 +2,7 @@
   text-align: center;
 }
 
-.CellTest {
+.Cell {
   height: 14px;
   width: 14px;
   border: 1px dotted black;
@@ -14,4 +14,8 @@
 .GridRow {
   display: table;
   clear: both;
+}
+
+.LiveCell {
+  background-color: black;
 }

@@ -2,7 +2,7 @@ import React from 'react';
 
 function Cell(props) {
     return (
-        <button className="CellTest" onClick={props.onClick} />
+        <button className={props.cellstyling} onClick={props.onClick} />
     )
 }
 
