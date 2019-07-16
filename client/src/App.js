@@ -15,13 +15,13 @@ class App extends React.Component {
     };
   }
 
-  startsimulation = () => {
+  startSimulation = () => {
     let nextstate = this.state.celldata.slice().map((cell, index) => {
       let neighborcount = 0;
       // Check and keep count of all neighbors to particular Cell.
-      // index % 49/50 check is used to assure cells do not check next/prev
+      // index % 50 check is used to assure cells do not check next/prev
       // rows for neighbors.
-      if ((index % 50 != 0) && this.state.celldata[index - 51]) {
+      if (((index-1) % 50 !== 0) && (this.state.celldata[index - 51])) {
         // Upper Left Neighbor
         neighborcount++;
       }
@@ -29,19 +29,19 @@ class App extends React.Component {
         // Upper Center Neighbor
         neighborcount++;
       }
-      if ((index % 49 != 0) && this.state.celldata[index - 49]) {
+      if ((index % 50 !== 0) && this.state.celldata[index - 49]) {
         // Upper Right Neighbor
         neighborcount++;
       }
-      if ((index % 50 != 0) && this.state.celldata[index - 1]) {
+      if (((index-1) % 50 !== 0) && this.state.celldata[index - 1]) {
         // Left Neighbor
         neighborcount++;
       }
-      if (((index === 0) || (index % 49 != 0)) && this.state.celldata[index + 1]) {
+      if (((index === 0) || ((index % 50 !== 0))) && this.state.celldata[index + 1]) {
         // Right Neighbor
         neighborcount++;
       }
-      if ((index % 50 != 0) && this.state.celldata[index + 49]) {
+      if (((index-1) % 50 !== 0) && this.state.celldata[index + 49]) {
         // Lower Left Neighbor
         neighborcount++;
       }
@@ -49,9 +49,12 @@ class App extends React.Component {
         // Lower Center Neighbor
         neighborcount++;
       }
-      if ((index % 49 != 0) && this.state.celldata[index + 51]) {
+      if ((index % 50 !== 0) && this.state.celldata[index + 51]) {
         // Lower Right Neighbor
         neighborcount++;
+      }
+      if (index === 101) {
+        console.log(`101 has ${neighborcount} neighbors`)
       }
       if (this.state.celldata[index]) {
         if (neighborcount < 2 || neighborcount > 3) {
@@ -74,7 +77,7 @@ class App extends React.Component {
     this.setState({ celldata: nextstate });
   };
 
-  cellstyling = i => {
+  cellStyling = i => {
     if (this.state.celldata[i]) {
       return "Cell LiveCell";
     } else {
@@ -82,9 +85,8 @@ class App extends React.Component {
     }
   };
 
-  clickcell = i => {
+  clickCell = i => {
     console.log(`Cell ${i}`);
-    console.log("modulo", (i-1) % 50)
     const changedstate = this.state.celldata.slice();
     changedstate[i] = !changedstate[i];
     this.setState({
@@ -92,15 +94,26 @@ class App extends React.Component {
     });
   };
 
+  clearGrid = () => {
+    this.setState({
+      celldata
+    })
+  }
+
   render() {
     return (
       <div className="App">
-        <Grid cellstyling={this.cellstyling} onClick={this.clickcell} />
-        <Button
-          onClick={this.startsimulation}
-        >
-          Start Simulation
-        </Button>
+        <Grid cellstyling={this.cellStyling} onClick={this.clickCell} />
+        <div classname="ButtonRow">
+          <Button
+            onClick={this.startSimulation}
+          >
+            Start Simulation
+          </Button>
+          <Button onClick={this.clearGrid}>
+            Clear Grid
+          </Button>
+        </div>
       </div>
     );
   }
