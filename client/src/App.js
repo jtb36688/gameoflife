@@ -3,7 +3,7 @@ import "./Reset.css";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Grid from "./components/Grid";
-import celldata from "./defaultdata.js";
+import {cellData, gosperGun} from "./defaultdata.js"
 import {
   Button,
   InputGroup,
@@ -16,7 +16,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      celldata,
+      cellData,
       rewind: null,
       simulating: false,
       intervalId: null,
@@ -28,19 +28,19 @@ class App extends React.Component {
   }
 
   startAnimation = () => {
-    let rewind = this.state.celldata.slice();
-    let nextstate = this.createFrame(this.state.celldata);
+    let rewind = this.state.cellData.slice();
+    let nextstate = this.createFrame(this.state.cellData);
     this.setState({
       rewind
     });
     let intervalId = setInterval(() => {
       this.setState(
         currentState => ({
-          celldata: nextstate,
+          cellData: nextstate,
           currentGeneration: ++currentState.currentGeneration
         }),
         () => {
-          nextstate = this.createFrame(this.state.celldata);
+          nextstate = this.createFrame(this.state.cellData);
         }
       );
     }, parseInt(this.state.simSpeed, 10));
@@ -120,9 +120,9 @@ class App extends React.Component {
   fastForwardGrid = () => {
     if (/^\d+$/.test(this.state.frameNum)) {
       let frameNum = parseInt(this.state.frameNum, 10);
-      let nextstate = this.state.celldata.slice();
+      let nextstate = this.state.cellData.slice();
       if (this.state.currentGeneration === 0) { 
-        let rewind = this.state.celldata.slice();
+        let rewind = this.state.cellData.slice();
         this.setState({
           rewind
         });
@@ -131,7 +131,7 @@ class App extends React.Component {
         nextstate = this.createFrame(nextstate);
       }
       this.setState(currentState => ({
-        celldata: nextstate,
+        cellData: nextstate,
         currentGeneration: currentState.currentGeneration + frameNum
       }));
       this.setState({
@@ -148,7 +148,7 @@ class App extends React.Component {
 
   rewindGrid = () => {
     this.setState(currentState => ({
-      celldata: currentState.rewind,
+      cellData: currentState.rewind,
       currentGeneration: 0
     }), () => {
       this.setState({
@@ -158,7 +158,7 @@ class App extends React.Component {
   }
 
   cellStyling = i => {
-    if (this.state.celldata[i]) {
+    if (this.state.cellData[i]) {
       return "Cell LiveCell";
     } else {
       return "Cell";
@@ -173,10 +173,10 @@ class App extends React.Component {
         });
       }
       console.log(`Cell ${i}`);
-      const changedstate = this.state.celldata.slice();
+      const changedstate = this.state.cellData.slice();
       changedstate[i] = !changedstate[i];
       this.setState({
-        celldata: changedstate
+        cellData: changedstate
       });
     }
   };
@@ -184,7 +184,7 @@ class App extends React.Component {
   clearGrid = () => {
     if (!this.state.simulating) {
       this.setState({
-        celldata,
+        cellData,
         currentGeneration: 0
       });
     }
@@ -233,19 +233,19 @@ class App extends React.Component {
             <div className="SpeedSelectorContainer">
               <div>
                 <input className="SpeedSelector" type="radio" id="1x" name="simSpeed" value="1000" onChange={this.handleChanges} checked={this.state.simSpeed === '1000'}/>
-                <label for="1x">1x</label>
+                <label>1x</label>
               </div>
               <div>
                 <input className="SpeedSelector" type="radio" id="2x" name="simSpeed" value="500" onChange={this.handleChanges} checked={this.state.simSpeed === '500'}/>
-                <label for="2x">2x</label>
+                <label>2x</label>
               </div>
               <div>
                 <input className="SpeedSelector" type="radio" id="5x" name="simSpeed" value="200" onChange={this.handleChanges} checked={this.state.simSpeed === '200'}/>
-                <label for="5x">5x</label>
+                <label>5x</label>
               </div>
               <div>
                 <input className="SpeedSelector" type="radio" id="10x" name="simSpeed" value="100" onChange={this.handleChanges} checked={this.state.simSpeed === '100'}/>
-                <label for="10x">10x</label>
+                <label>10x</label>
               </div>
             </div>
           </div>
