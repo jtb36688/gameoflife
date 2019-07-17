@@ -4,54 +4,66 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Grid from "./components/Grid";
 import celldata from "./defaultdata.js";
-import { Button, InputGroup, Input, InputGroupAddon, InputGroupText } from "reactstrap";
+import {
+  Button,
+  InputGroup,
+  Input,
+  InputGroupAddon,
+  InputGroupText
+} from "reactstrap";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       celldata,
+      rewind: null,
       simulating: false,
       intervalId: null,
-      currentGeneration: null,
+      currentGeneration: 0,
       frameNum: "",
       ffError: false
     };
   }
 
   startAnimation = () => {
-    let nextstate = this.createFrame(this.state.celldata); 
-    let currentGeneration = 0 
+    let rewind = this.state.celldata.slice();
+    let nextstate = this.createFrame(this.state.celldata);
+    this.setState({
+      rewind
+    });
     let intervalId = setInterval(() => {
-      currentGeneration++
-      this.setState({
-        celldata: nextstate,
-        currentGeneration
-      }, () => {
-        nextstate = this.createFrame(this.state.celldata);
-      })
-    }, 1000)
+      this.setState(
+        currentState => ({
+          celldata: nextstate,
+          currentGeneration: ++currentState.currentGeneration
+        }),
+        () => {
+          nextstate = this.createFrame(this.state.celldata);
+        }
+      );
+    }, 1000);
     this.setState({
       simulating: true,
       intervalId
-    })
-  }
+    });
+  };
 
   endAnimation = () => {
-    clearInterval(this.state.intervalId)
+    clearInterval(this.state.intervalId);
     this.setState({
       simulating: false,
       intervalId: null
-    })
-  }
+    });
+  };
 
-  createFrame = (datasource) => {
+  createFrame = datasource => {
     let simulation = datasource.map((cell, index) => {
       let neighborcount = 0;
       // Check and keep count of all neighbors to particular Cell.
       // index % 50 check is used to assure cells do not check next/prev
       // rows for neighbors.
-      if (((index-1) % 50 !== 0) && (datasource[index - 51])) {
+      if ((index - 1) % 50 !== 0 && datasource[index - 51]) {
         // Upper Left Neighbor
         neighborcount++;
       }
@@ -59,19 +71,19 @@ class App extends React.Component {
         // Upper Center Neighbor
         neighborcount++;
       }
-      if ((index % 50 !== 0) && datasource[index - 49]) {
+      if (index % 50 !== 0 && datasource[index - 49]) {
         // Upper Right Neighbor
         neighborcount++;
       }
-      if (((index-1) % 50 !== 0) && datasource[index - 1]) {
+      if ((index - 1) % 50 !== 0 && datasource[index - 1]) {
         // Left Neighbor
         neighborcount++;
       }
-      if (((index === 0) || ((index % 50 !== 0))) && datasource[index + 1]) {
+      if ((index === 0 || index % 50 !== 0) && datasource[index + 1]) {
         // Right Neighbor
         neighborcount++;
       }
-      if (((index-1) % 50 !== 0) && datasource[index + 49]) {
+      if ((index - 1) % 50 !== 0 && datasource[index + 49]) {
         // Lower Left Neighbor
         neighborcount++;
       }
@@ -79,7 +91,7 @@ class App extends React.Component {
         // Lower Center Neighbor
         neighborcount++;
       }
-      if ((index % 50 !== 0) && datasource[index + 51]) {
+      if (index % 50 !== 0 && datasource[index + 51]) {
         // Lower Right Neighbor
         neighborcount++;
       }
@@ -104,27 +116,44 @@ class App extends React.Component {
     return simulation;
   };
 
-  fastForward = () => {
+  fastForwardGrid = () => {
     if (/^\d+$/.test(this.state.frameNum)) {
-      let frameNum = parseInt(this.state.frameNum, 10)
-      let nextstate = this.state.celldata.slice()
+      let frameNum = parseInt(this.state.frameNum, 10);
+      let nextstate = this.state.celldata.slice();
+      if (this.state.currentGeneration === 0) { 
+        let rewind = this.state.celldata.slice();
+        this.setState({
+          rewind
+        });
+      }
       for (let i = 1; i <= frameNum; i++) {
         nextstate = this.createFrame(nextstate);
       }
-      this.setState({
+      this.setState(currentState => ({
         celldata: nextstate,
-        currentGeneration: frameNum
-      })
+        currentGeneration: currentState.currentGeneration + frameNum
+      }));
       this.setState({
         ffError: false,
         frameNum: ""
-      })
+      });
     } else {
       this.setState({
         ffError: true,
         frameNum: ""
-      })
+      });
     }
+  };
+
+  rewindGrid = () => {
+    this.setState(currentState => ({
+      celldata: currentState.rewind,
+      currentGeneration: 0
+    }), () => {
+      this.setState({
+        rewind: null
+      })
+    })
   }
 
   cellStyling = i => {
@@ -137,67 +166,71 @@ class App extends React.Component {
 
   clickCell = i => {
     if (!this.state.simulating) {
+      if (this.state.currentGeneration) {
+        this.setState({
+          currentGeneration: 0
+        });
+      }
       console.log(`Cell ${i}`);
       const changedstate = this.state.celldata.slice();
       changedstate[i] = !changedstate[i];
       this.setState({
         celldata: changedstate
       });
-  }
+    }
   };
 
   clearGrid = () => {
     if (!this.state.simulating) {
       this.setState({
-        celldata
-      })
+        celldata,
+        currentGeneration: 0
+      });
     }
-  }
+  };
 
-  handleChanges = (e) => {
+  handleChanges = e => {
     this.setState({
       [e.target.name]: e.target.value
-    })
-    
-  }
+    });
+  };
 
   render() {
     return (
       <div className="App">
         <div className="InfoRow">
-          {!!this.state.currentGeneration ?
-          (`Generation ${this.state.currentGeneration}`) :
-          ("Click cells below or select a preset and start the simulation!")}
+          {!!this.state.currentGeneration
+            ? `Generation ${this.state.currentGeneration}`
+            : "Click cells below or select a preset and start the simulation!"}
         </div>
         <Grid cellstyling={this.cellStyling} onClick={this.clickCell} />
         <div className="ButtonRow">
-          {!!this.state.simulating ? (<Button
-            onClick={this.endAnimation}
-          >
-            Stop Simulation
-          </Button>) : (<Button
-            onClick={this.startAnimation}
-          >
-            Start Simulation
-          </Button>)}
+          {!!this.state.simulating ? (
+            <Button onClick={this.endAnimation}>Stop Simulation</Button>
+          ) : (
+            <Button onClick={this.startAnimation}>Start Simulation</Button>
+          )}
         </div>
         {!this.state.simulating && (
           <div className="ButtonRow2">
             <InputGroup>
               <InputGroupAddon addonType="prepend">
                 <InputGroupText>
-                  <Button onClick={this.fastForward}>Fast Forward</Button>
+                  <Button onClick={this.fastForwardGrid}>Fast Forward</Button>
                 </InputGroupText>
               </InputGroupAddon>
-              <Input placeholder="Give a number to skip to that frame #" name="frameNum" value={this.state.frameNum}
-              onChange={this.handleChanges} />
+              <Input
+                className="FastForwardInput"
+                placeholder="Number of Generations..."
+                name="frameNum"
+                value={this.state.frameNum}
+                onChange={this.handleChanges}
+              />
             </InputGroup>
-            <Button onClick={this.clearGrid}>
-              Clear Grid
-            </Button>
+            <Button onClick={this.clearGrid}>Clear Grid</Button>
+            <Button onClick={this.rewindGrid}>Rewind to Generation 0</Button>
           </div>
         )}
-          
       </div>
     );
   }

@@ -13,6 +13,10 @@
   padding: 0;
 }
 
+.FastForwardInput {
+  height: 52px;
+}
+
 .GridRow {
   display: table;
   clear: both;
