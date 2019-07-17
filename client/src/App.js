@@ -22,7 +22,8 @@ class App extends React.Component {
       intervalId: null,
       currentGeneration: 0,
       frameNum: "",
-      ffError: false
+      ffError: false,
+      simSpeed: "1000"
     };
   }
 
@@ -42,7 +43,7 @@ class App extends React.Component {
           nextstate = this.createFrame(this.state.celldata);
         }
       );
-    }, 1000);
+    }, parseInt(this.state.simSpeed, 10));
     this.setState({
       simulating: true,
       intervalId
@@ -229,6 +230,24 @@ class App extends React.Component {
             </InputGroup>
             <Button onClick={this.clearGrid}>Clear Grid</Button>
             <Button onClick={this.rewindGrid}>Rewind to Generation 0</Button>
+            <div className="SpeedSelectorContainer">
+              <div>
+                <input className="SpeedSelector" type="radio" id="1x" name="simSpeed" value="1000" onChange={this.handleChanges} checked={this.state.simSpeed === '1000'}/>
+                <label for="1x">1x</label>
+              </div>
+              <div>
+                <input className="SpeedSelector" type="radio" id="2x" name="simSpeed" value="500" onChange={this.handleChanges} checked={this.state.simSpeed === '500'}/>
+                <label for="2x">2x</label>
+              </div>
+              <div>
+                <input className="SpeedSelector" type="radio" id="5x" name="simSpeed" value="200" onChange={this.handleChanges} checked={this.state.simSpeed === '200'}/>
+                <label for="5x">5x</label>
+              </div>
+              <div>
+                <input className="SpeedSelector" type="radio" id="10x" name="simSpeed" value="100" onChange={this.handleChanges} checked={this.state.simSpeed === '100'}/>
+                <label for="10x">10x</label>
+              </div>
+            </div>
           </div>
         )}
       </div>
