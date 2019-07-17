@@ -20,7 +20,7 @@ class App extends React.Component {
   }
 
   startAnimation = () => {
-    let nextstate = this.createFrame(); 
+    let nextstate = this.createFrame(this.state.celldata); 
     let currentGeneration = 0 
     let intervalId = setInterval(() => {
       currentGeneration++
@@ -28,7 +28,7 @@ class App extends React.Component {
         celldata: nextstate,
         currentGeneration
       }, () => {
-        nextstate = this.createFrame();
+        nextstate = this.createFrame(this.state.celldata);
       })
     }, 1000)
     this.setState({
@@ -45,45 +45,45 @@ class App extends React.Component {
     })
   }
 
-  createFrame = () => {
-    let simulation = this.state.celldata.slice().map((cell, index) => {
+  createFrame = (datasource) => {
+    let simulation = datasource.map((cell, index) => {
       let neighborcount = 0;
       // Check and keep count of all neighbors to particular Cell.
       // index % 50 check is used to assure cells do not check next/prev
       // rows for neighbors.
-      if (((index-1) % 50 !== 0) && (this.state.celldata[index - 51])) {
+      if (((index-1) % 50 !== 0) && (datasource[index - 51])) {
         // Upper Left Neighbor
         neighborcount++;
       }
-      if (this.state.celldata[index - 50]) {
+      if (datasource[index - 50]) {
         // Upper Center Neighbor
         neighborcount++;
       }
-      if ((index % 50 !== 0) && this.state.celldata[index - 49]) {
+      if ((index % 50 !== 0) && datasource[index - 49]) {
         // Upper Right Neighbor
         neighborcount++;
       }
-      if (((index-1) % 50 !== 0) && this.state.celldata[index - 1]) {
+      if (((index-1) % 50 !== 0) && datasource[index - 1]) {
         // Left Neighbor
         neighborcount++;
       }
-      if (((index === 0) || ((index % 50 !== 0))) && this.state.celldata[index + 1]) {
+      if (((index === 0) || ((index % 50 !== 0))) && datasource[index + 1]) {
         // Right Neighbor
         neighborcount++;
       }
-      if (((index-1) % 50 !== 0) && this.state.celldata[index + 49]) {
+      if (((index-1) % 50 !== 0) && datasource[index + 49]) {
         // Lower Left Neighbor
         neighborcount++;
       }
-      if (this.state.celldata[index + 50]) {
+      if (datasource[index + 50]) {
         // Lower Center Neighbor
         neighborcount++;
       }
-      if ((index % 50 !== 0) && this.state.celldata[index + 51]) {
+      if ((index % 50 !== 0) && datasource[index + 51]) {
         // Lower Right Neighbor
         neighborcount++;
       }
-      if (this.state.celldata[index]) {
+      if (datasource[index]) {
         if (neighborcount < 2 || neighborcount > 3) {
           // Any live cell with fewer than two live neighbours dies.
           // Any live cell with more than three live neighbours dies.
@@ -106,9 +106,24 @@ class App extends React.Component {
 
   fastForward = () => {
     if (/^\d+$/.test(this.state.frameNum)) {
-      console.log("number")
+      let frameNum = parseInt(this.state.frameNum, 10)
+      let nextstate = this.state.celldata.slice()
+      for (let i = 1; i <= frameNum; i++) {
+        nextstate = this.createFrame(nextstate);
+      }
+      this.setState({
+        celldata: nextstate,
+        currentGeneration: frameNum
+      })
+      this.setState({
+        ffError: false,
+        frameNum: ""
+      })
     } else {
-      console.log("not number")
+      this.setState({
+        ffError: true,
+        frameNum: ""
+      })
     }
   }
 
