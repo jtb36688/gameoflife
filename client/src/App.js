@@ -11,12 +11,40 @@ class App extends React.Component {
     super(props);
     this.state = {
       celldata,
-      simulating: false
+      simulating: false,
+      intervalId: null,
+      currentGeneration: null
     };
   }
 
-  startSimulation = () => {
-    let nextstate = this.state.celldata.slice().map((cell, index) => {
+  startAnimation = () => {
+    let nextstate = this.createFrame(); 
+    let currentGeneration = 0 
+    let intervalId = setInterval(() => {
+      currentGeneration++
+      this.setState({
+        celldata: nextstate,
+        currentGeneration
+      }, () => {
+        nextstate = this.createFrame();
+      })
+    }, 1000)
+    this.setState({
+      simulating: true,
+      intervalId
+    })
+  }
+
+  endAnimation = () => {
+    clearInterval(this.state.intervalId)
+    this.setState({
+      simulating: false,
+      intervalId: null
+    })
+  }
+
+  createFrame = () => {
+    let simulation = this.state.celldata.slice().map((cell, index) => {
       let neighborcount = 0;
       // Check and keep count of all neighbors to particular Cell.
       // index % 50 check is used to assure cells do not check next/prev
@@ -53,9 +81,6 @@ class App extends React.Component {
         // Lower Right Neighbor
         neighborcount++;
       }
-      if (index === 101) {
-        console.log(`101 has ${neighborcount} neighbors`)
-      }
       if (this.state.celldata[index]) {
         if (neighborcount < 2 || neighborcount > 3) {
           // Any live cell with fewer than two live neighbours dies.
@@ -74,7 +99,7 @@ class App extends React.Component {
         }
       }
     });
-    this.setState({ celldata: nextstate });
+    return simulation;
   };
 
   cellStyling = i => {
@@ -86,30 +111,44 @@ class App extends React.Component {
   };
 
   clickCell = i => {
-    console.log(`Cell ${i}`);
-    const changedstate = this.state.celldata.slice();
-    changedstate[i] = !changedstate[i];
-    this.setState({
-      celldata: changedstate
-    });
+    if (!this.state.simulating) {
+      console.log(`Cell ${i}`);
+      const changedstate = this.state.celldata.slice();
+      changedstate[i] = !changedstate[i];
+      this.setState({
+        celldata: changedstate
+      });
+  }
   };
 
   clearGrid = () => {
-    this.setState({
-      celldata
-    })
+    if (!this.state.simulating) {
+      this.setState({
+        celldata
+      })
+    }
   }
 
   render() {
     return (
       <div className="App">
+        <div className="InfoRow">
+          {!!this.state.currentGeneration ?
+          (`Generation ${this.state.currentGeneration}`) :
+          ("Click cells below or select a preset and start the simulation!")}
+        </div>
         <Grid cellstyling={this.cellStyling} onClick={this.clickCell} />
         <div classname="ButtonRow">
-          <Button
-            onClick={this.startSimulation}
+          {!!this.state.simulating ? (<Button
+            onClick={this.endAnimation}
+          >
+            Stop Simulation
+          </Button>) : (<Button
+            onClick={this.startAnimation}
           >
             Start Simulation
-          </Button>
+          </Button>)}
+          
           <Button onClick={this.clearGrid}>
             Clear Grid
           </Button>
