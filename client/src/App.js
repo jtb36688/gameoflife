@@ -4,7 +4,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Grid from "./components/Grid";
 import celldata from "./defaultdata.js";
-import { Button } from "reactstrap";
+import { Button, InputGroup, Input, InputGroupAddon, InputGroupText } from "reactstrap";
 
 class App extends React.Component {
   constructor(props) {
@@ -13,7 +13,9 @@ class App extends React.Component {
       celldata,
       simulating: false,
       intervalId: null,
-      currentGeneration: null
+      currentGeneration: null,
+      frameNum: "",
+      ffError: false
     };
   }
 
@@ -102,6 +104,14 @@ class App extends React.Component {
     return simulation;
   };
 
+  fastForward = () => {
+    if (/^\d+$/.test(this.state.frameNum)) {
+      console.log("number")
+    } else {
+      console.log("not number")
+    }
+  }
+
   cellStyling = i => {
     if (this.state.celldata[i]) {
       return "Cell LiveCell";
@@ -129,6 +139,13 @@ class App extends React.Component {
     }
   }
 
+  handleChanges = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+    
+  }
+
   render() {
     return (
       <div className="App">
@@ -138,7 +155,7 @@ class App extends React.Component {
           ("Click cells below or select a preset and start the simulation!")}
         </div>
         <Grid cellstyling={this.cellStyling} onClick={this.clickCell} />
-        <div classname="ButtonRow">
+        <div className="ButtonRow">
           {!!this.state.simulating ? (<Button
             onClick={this.endAnimation}
           >
@@ -148,11 +165,24 @@ class App extends React.Component {
           >
             Start Simulation
           </Button>)}
-          
-          <Button onClick={this.clearGrid}>
-            Clear Grid
-          </Button>
         </div>
+        {!this.state.simulating && (
+          <div className="ButtonRow2">
+            <InputGroup>
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <Button onClick={this.fastForward}>Fast Forward</Button>
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input placeholder="Give a number to skip to that frame #" name="frameNum" value={this.state.frameNum}
+              onChange={this.handleChanges} />
+            </InputGroup>
+            <Button onClick={this.clearGrid}>
+              Clear Grid
+            </Button>
+          </div>
+        )}
+          
       </div>
     );
   }
