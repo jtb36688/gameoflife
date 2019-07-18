@@ -5,6 +5,7 @@ class Grid extends React.Component {
   renderCell = i => {
     return (
       <Cell
+        key={i}
         cellstyling={this.props.cellstyling(i)}       
         onClick={() => this.props.onClick(i)}
       />
@@ -18,7 +19,7 @@ class Grid extends React.Component {
       for (let x = 0; x < 50; x++) {
         children.push(this.renderCell(x + i * 50));
       }
-      table.push(<div className="GridRow">{children}</div>);
+      table.push(<div key={i} className="GridRow">{children}</div>);
     }
     return table;
   };

@@ -16,14 +16,15 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cellData,
+      cellData: gosperGun,
       rewind: null,
       simulating: false,
       intervalId: null,
       currentGeneration: 0,
       frameNum: "",
       ffError: false,
-      simSpeed: "200"
+      simSpeed: "200",
+      preset: null
     };
   }
 
@@ -201,7 +202,47 @@ class App extends React.Component {
     this.setState({
       [e.target.name]: e.target.value
     });
+    console.log(this.state.preset)
   };
+
+  submitPreset = e => {
+    e.preventDefault()
+    if (this.state.preset === "cellData") {
+      this.setState({
+        cellData
+      })
+    }
+    if (this.state.preset === "shuttle") {
+      this.setState({
+        cellData: shuttle
+      })
+    }
+    if (this.state.preset === "fireworks") {
+      this.setState({
+        cellData: fireworks
+      })
+    }
+    if (this.state.preset === "gosperGun") {
+      this.setState({
+        cellData: gosperGun
+      })
+    }
+    if (this.state.preset == "eureka") {
+      this.setState({
+        cellData: eureka
+      })
+    }
+    if (this.state.preset == "gliderDiamond") {
+      this.setState({
+        cellData: gliderDiamond
+      })
+    }
+    if (this.state.preset == "flower") {
+      this.setState({
+        cellData: flower
+      })
+    }
+  }
 
   render() {
     return (
@@ -259,29 +300,32 @@ class App extends React.Component {
                 <label>10x</label>
               </div>
             </div>
-            <select
-              name="cellData"
-              onChange={this.handleChanges}>
-                <option value={cellData}>Select a preset..</option>
-                <option value={gosperGun}>
-                  Gosper Glider Gun
-                </option>
-                <option value={flower}>
-                  Flower
-                </option>
-                <option value={fireworks}>
-                  Fireworks
-                </option>
-                <option value={gliderDiamond}>
-                  Glider Diamond
-                </option>
-                <option value={shuttle}>
-                  Glider shuttle
-                </option>
-                <option value={eureka}>
-                  Eureka stars
-                </option>
-              </select>
+            <form onSubmit={this.submitPreset}>
+              <select
+                name="preset"
+                onChange={this.handleChanges}>
+                  <option value="cellData">Select a preset..</option>
+                  <option value="gosperGun">
+                    Gosper Glider Gun
+                  </option>
+                  <option value="flower">
+                    Flower
+                  </option>
+                  <option value="fireworks">
+                    Fireworks
+                  </option>
+                  <option value="gliderDiamond">
+                    Glider Diamond
+                  </option>
+                  <option value="shuttle">
+                    Glider shuttle
+                  </option>
+                  <option value="eureka">
+                    Eureka stars
+                  </option>
+                </select>
+                <Button>Enable Preset</Button>
+              </form>
           </div>
         )}
       </div>
