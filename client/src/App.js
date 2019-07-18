@@ -3,7 +3,7 @@ import "./Reset.css";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Grid from "./components/Grid";
-import {cellData, gosperGun, flower} from "./defaultdata.js"
+import {cellData, gosperGun, flower, eureka} from "./defaultdata.js"
 import {
   Button,
   InputGroup,
@@ -16,7 +16,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cellData: gosperGun,
+      cellData: eureka,
       rewind: null,
       simulating: false,
       intervalId: null,
