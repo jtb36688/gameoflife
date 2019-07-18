@@ -2,12 +2,14 @@ import flowerCells from "./flowerCells"
 import eurekaCells from "./eurekaCells"
 import gosperGunCells from "./gosperGunCells"
 import gliderDiamondCells from "./gliderDiamondCells"
+import shuttleCells from "./shuttleCells"
 
 const cellData = []
 const gosperGun = []
 const flower = []
 const eureka = []
 const gliderDiamond = []
+const shuttle = []
 
 for (let i = 1; i <= 2500; i++) {
     if (gosperGunCells.includes(i)) {
@@ -42,6 +44,14 @@ for (let i = 1; i <= 2500; i++) {
 }
 
 for (let i = 1; i <= 2500; i++) {
+    if (shuttleCells.includes(i)) {
+        shuttle.push(true)
+    } else {
+        shuttle.push(false)
+    }
+}
+
+for (let i = 1; i <= 2500; i++) {
     if (i === 0) {
         cellData.push(true)
     } else {
@@ -50,4 +60,4 @@ for (let i = 1; i <= 2500; i++) {
 }
 
 
-export {cellData, gosperGun, flower, eureka, gliderDiamond};
+export {cellData, gosperGun, flower, eureka, gliderDiamond, shuttle};

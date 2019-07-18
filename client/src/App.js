@@ -3,7 +3,7 @@ import "./Reset.css";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Grid from "./components/Grid";
-import {cellData, gosperGun, flower, eureka, gliderDiamond} from "./defaultdata.js"
+import {cellData, gosperGun, flower, eureka, gliderDiamond, shuttle} from "./defaultdata.js"
 import {
   Button,
   InputGroup,
@@ -16,7 +16,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cellData: gliderDiamond,
+      cellData: shuttle,
       rewind: null,
       simulating: false,
       intervalId: null,
@@ -32,7 +32,7 @@ class App extends React.Component {
     let consolearray = []
     rewind.forEach((cell, index) => {
       if (cell) {
-        consolearray.push(index+200)
+        consolearray.push(index+300)
       }
     })
     console.log(consolearray)
