@@ -16,7 +16,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cellData: fireworks,
+      cellData,
       rewind: null,
       simulating: false,
       intervalId: null,
@@ -259,6 +259,29 @@ class App extends React.Component {
                 <label>10x</label>
               </div>
             </div>
+            <select
+              name="cellData"
+              onChange={this.handleChanges}>
+                <option value={cellData}>Select a preset..</option>
+                <option value={gosperGun}>
+                  Gosper Glider Gun
+                </option>
+                <option value={flower}>
+                  Flower
+                </option>
+                <option value={fireworks}>
+                  Fireworks
+                </option>
+                <option value={gliderDiamond}>
+                  Glider Diamond
+                </option>
+                <option value={shuttle}>
+                  Glider shuttle
+                </option>
+                <option value={eureka}>
+                  Eureka stars
+                </option>
+              </select>
           </div>
         )}
       </div>
