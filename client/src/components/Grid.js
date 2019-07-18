@@ -15,7 +15,7 @@ class Grid extends React.Component {
     let table = [];
     for (let i = 0; i < 50; i++) {
       let children = [];
-      for (let x = 1; x <= 50; x++) {
+      for (let x = 0; x < 50; x++) {
         children.push(this.renderCell(x + i * 50));
       }
       table.push(<div className="GridRow">{children}</div>);

@@ -236,7 +236,11 @@ class App extends React.Component {
               />
             </InputGroup>
             <Button onClick={this.clearGrid}>Clear Grid</Button>
+            {!!this.state.rewind ? (
             <Button onClick={this.rewindGrid}>Rewind to Generation 0</Button>
+            ) : (
+            <Button disabled onClick={this.rewindGrid}>Rewind to Generation 0</Button>
+            ) }
             <div className="SpeedSelectorContainer">
               <div>
                 <input className="SpeedSelector" type="radio" id="1x" name="simSpeed" value="1000" onChange={this.handleChanges} checked={this.state.simSpeed === '1000'}/>
