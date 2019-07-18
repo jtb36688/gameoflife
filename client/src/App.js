@@ -3,7 +3,7 @@ import "./Reset.css";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Grid from "./components/Grid";
-import {cellData, gosperGun} from "./defaultdata.js"
+import {cellData, gosperGun, flower} from "./defaultdata.js"
 import {
   Button,
   InputGroup,
@@ -16,7 +16,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cellData,
+      cellData: flower,
       rewind: null,
       simulating: false,
       intervalId: null,
@@ -29,6 +29,13 @@ class App extends React.Component {
 
   startAnimation = () => {
     let rewind = this.state.cellData.slice();
+    let consolearray = []
+    rewind.forEach((cell, index) => {
+      if (cell) {
+        consolearray.push(index+300)
+      }
+    })
+    console.log(consolearray)
     let nextstate = this.createFrame(this.state.cellData);
     this.setState({
       rewind
