@@ -16,14 +16,14 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cellData: flower,
+      cellData: gosperGun,
       rewind: null,
       simulating: false,
       intervalId: null,
       currentGeneration: 0,
       frameNum: "",
       ffError: false,
-      simSpeed: "1000"
+      simSpeed: "200"
     };
   }
 
@@ -32,7 +32,7 @@ class App extends React.Component {
     let consolearray = []
     rewind.forEach((cell, index) => {
       if (cell) {
-        consolearray.push(index+300)
+        consolearray.push(index+1)
       }
     })
     console.log(consolearray)
