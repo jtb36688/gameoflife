@@ -25,15 +25,16 @@
   font-variant: normal; 
   font-weight: 700; 
   line-height: 26.4px;
-  margin: 40px 0;
+  margin: 60px 0;
 }
 
-.Subtitle {
+.GridSubTitle {
   font-family: Verdana, Geneva, sans-serif; 
   font-size: 18px; 
   font-style: normal; 
   font-variant: normal;  
   line-height: 26.4px;
+  margin-left: 120px;
 }
 
 .Cell {
@@ -63,7 +64,7 @@
 .LeftButtons {
   display: flex;
   flex-direction: column;
-  width: 100px;
+  width: 275px;
   height: 500px;
   justify-content:space-between;
   align-items: center;
@@ -81,7 +82,7 @@
 .RightButtons {
   display: flex;
   flex-direction: column;
-  width: 100px;
+  width: 155px;
   height: 500px;
   justify-content:space-between;
 }

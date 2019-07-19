@@ -256,14 +256,14 @@ class App extends React.Component {
     return (
       <div className="App">
         <h1 className="Title">Conway's Game of Life</h1>
-        <p className="SubTitle">{!!this.state.currentGeneration
+        <p className="GridSubTitle">{!!this.state.currentGeneration
             ? `Generation ${this.state.currentGeneration}`
             : "Click cells below or select a preset and start the simulation!"}</p>
         <div className="GameWrapper">
         {!!this.state.simulating ? (
           <div className="LeftButtons">
               <div className="FastForwardWrapper">
-                <Button disabled onClick={this.fastForwardGrid}>Fast Forward</Button>
+                <Button disabled onClick={this.fastForwardGrid}><i class="fas fa-fast-forward"></i>Fast Forward</Button>
                 <div className="FFSelectorWrapper Hidden">
                   <div>
                     <input className="FFSelector" type="radio" name="frameNum" value="1" onChange={this.handleChanges} checked={this.state.frameNum === '1'}/>
@@ -283,9 +283,9 @@ class App extends React.Component {
                   </div>
                 </div>
                 {!!this.state.rewind ? (
-              <Button onClick={this.rewindGrid}>Rewind to Generation 0</Button>
+              <Button onClick={this.rewindGrid}><i class="fas fa-fast-backward"></i>Rewind to Generation 0</Button>
               ) : (
-              <Button disabled onClick={this.rewindGrid}>Rewind to Generation 0</Button>
+              <Button disabled onClick={this.rewindGrid}><i class="fas fa-fast-backward"></i>Rewind to Generation 0</Button>
               ) }
               </div>
               
@@ -313,7 +313,7 @@ class App extends React.Component {
         ) :
             (<div className="LeftButtons">
               <div className="FastForwardWrapper">
-                <Button onClick={this.fastForwardGrid}>Fast Forward</Button>
+                <Button onClick={this.fastForwardGrid}><i class="fas fa-fast-forward"></i>Fast Forward</Button>
                 <div className="FFSelectorWrapper">
                   <div>
                     <input className="FFSelector" type="radio" name="frameNum" value="1" onChange={this.handleChanges} checked={this.state.frameNum === '1'}/>
@@ -333,9 +333,9 @@ class App extends React.Component {
                   </div>
                 </div>
                 {!!this.state.rewind ? (
-              <Button onClick={this.rewindGrid}>Rewind to Generation 0</Button>
+              <Button onClick={this.rewindGrid}><i class="fas fa-fast-backward"></i>Rewind to Generation 0</Button>
               ) : (
-              <Button disabled onClick={this.rewindGrid}>Rewind to Generation 0</Button>
+              <Button disabled onClick={this.rewindGrid}><i class="fas fa-fast-backward"></i>Rewind to Generation 0</Button>
               ) }
               </div>
               
@@ -363,7 +363,7 @@ class App extends React.Component {
           <Grid cellstyling={this.cellStyling} onClick={this.clickCell} />
             {!!this.state.simulating ? (
               <div className="RightButtons">
-              <Button disabled onClick={this.clearGrid}>Clear Grid</Button>
+              <Button disabled onClick={this.clearGrid}><i class="fas fa-times"></i>Clear Grid</Button>
                 <Button style={{padding: "40px 0", borderRadius: "40%"}} className="StartStopButton" onClick={this.endAnimation}><i class="fas fa-stop"></i><p></p>Stop Simulation<p></p></Button>
                 <form className="PresetForm" onSubmit={this.submitPreset}>
                   <select
@@ -395,7 +395,7 @@ class App extends React.Component {
                 </div>
             ) : (
               <div className="RightButtons">
-                <Button onClick={this.clearGrid}>Clear Grid</Button>
+                <Button onClick={this.clearGrid}><i class="fas fa-times"></i> Clear Grid</Button>
                 <Button style={{padding: "40px 0", borderRadius: "40%"}} onClick={this.startAnimation}><i class="fas fa-play"></i><p></p>Start Simulation<p></p></Button>
                 <form className="PresetForm" onSubmit={this.submitPreset}>
                   <select
