@@ -263,7 +263,7 @@ class App extends React.Component {
         {!!this.state.simulating ? (
           <div className="LeftButtons">
               <div className="FastForwardWrapper">
-                <Button disabled onClick={this.fastForwardGrid}><i class="fas fa-fast-forward"></i>Fast Forward</Button>
+                <Button disabled style={{width: "220px", display: "flex", justifyContent: "space-evenly", alignItems: "baseline"}} onClick={this.fastForwardGrid}><i class="fas fa-fast-forward"></i>Fast Forward</Button>
                 <div className="FFSelectorWrapper Hidden">
                   <div>
                     <input className="FFSelector" type="radio" name="frameNum" value="1" onChange={this.handleChanges} checked={this.state.frameNum === '1'}/>
@@ -283,9 +283,9 @@ class App extends React.Component {
                   </div>
                 </div>
                 {!!this.state.rewind ? (
-              <Button onClick={this.rewindGrid}><i class="fas fa-fast-backward"></i>Rewind to Generation 0</Button>
+              <Button style={{width: "220px", display: "flex", justifyContent: "space-evenly", alignItems: "baseline"}} onClick={this.rewindGrid}><i class="fas fa-fast-backward"></i>Rewind to Start</Button>
               ) : (
-              <Button disabled onClick={this.rewindGrid}><i class="fas fa-fast-backward"></i>Rewind to Generation 0</Button>
+              <Button style={{width: "220px", display: "flex", justifyContent: "space-evenly", alignItems: "baseline"}} disabled onClick={this.rewindGrid}><i class="fas fa-fast-backward"></i>Rewind to Start</Button>
               ) }
               </div>
               
@@ -313,7 +313,7 @@ class App extends React.Component {
         ) :
             (<div className="LeftButtons">
               <div className="FastForwardWrapper">
-                <Button onClick={this.fastForwardGrid}><i class="fas fa-fast-forward"></i>Fast Forward</Button>
+                <Button style={{width: "220px", display: "flex", justifyContent: "space-evenly", alignItems: "baseline"}} onClick={this.fastForwardGrid}><i class="fas fa-fast-forward"></i>Fast Forward</Button>
                 <div className="FFSelectorWrapper">
                   <div>
                     <input className="FFSelector" type="radio" name="frameNum" value="1" onChange={this.handleChanges} checked={this.state.frameNum === '1'}/>
@@ -333,9 +333,9 @@ class App extends React.Component {
                   </div>
                 </div>
                 {!!this.state.rewind ? (
-              <Button onClick={this.rewindGrid}><i class="fas fa-fast-backward"></i>Rewind to Generation 0</Button>
+              <Button style={{width: "220px", display: "flex", justifyContent: "space-evenly", alignItems: "baseline"}} onClick={this.rewindGrid}><i class="fas fa-fast-backward"></i>Rewind to Start</Button>
               ) : (
-              <Button disabled onClick={this.rewindGrid}><i class="fas fa-fast-backward"></i>Rewind to Generation 0</Button>
+              <Button style={{width: "220px", display: "flex", justifyContent: "space-evenly", alignItems: "baseline"}} disabled onClick={this.rewindGrid}><i class="fas fa-fast-backward"></i>Rewind to Start</Button>
               ) }
               </div>
               
@@ -363,7 +363,7 @@ class App extends React.Component {
           <Grid cellstyling={this.cellStyling} onClick={this.clickCell} />
             {!!this.state.simulating ? (
               <div className="RightButtons">
-              <Button disabled onClick={this.clearGrid}><i class="fas fa-times"></i>Clear Grid</Button>
+              <Button disabled style={{display: "flex", justifyContent: "space-evenly", alignItems: "baseline"}} onClick={this.clearGrid}><i class="fas fa-times"></i>Clear Grid</Button>
                 <Button style={{padding: "40px 0", borderRadius: "40%"}} className="StartStopButton" onClick={this.endAnimation}><i class="fas fa-stop"></i><p></p>Stop Simulation<p></p></Button>
                 <form className="PresetForm" onSubmit={this.submitPreset}>
                   <select
@@ -395,7 +395,7 @@ class App extends React.Component {
                 </div>
             ) : (
               <div className="RightButtons">
-                <Button onClick={this.clearGrid}><i class="fas fa-times"></i> Clear Grid</Button>
+                <Button style={{display: "flex", justifyContent: "space-evenly", alignItems: "baseline"}} onClick={this.clearGrid}><i class="fas fa-times"></i> Clear Grid</Button>
                 <Button style={{padding: "40px 0", borderRadius: "40%"}} onClick={this.startAnimation}><i class="fas fa-play"></i><p></p>Start Simulation<p></p></Button>
                 <form className="PresetForm" onSubmit={this.submitPreset}>
                   <select
