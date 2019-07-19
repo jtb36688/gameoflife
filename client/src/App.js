@@ -364,8 +364,8 @@ class App extends React.Component {
             {!!this.state.simulating ? (
               <div className="RightButtons">
               <Button disabled onClick={this.clearGrid}>Clear Grid</Button>
-                <Button onClick={this.endAnimation}>Stop Simulation</Button>
-                <form onSubmit={this.submitPreset}>
+                <Button style={{padding: "40px 0", borderRadius: "40%"}} className="StartStopButton" onClick={this.endAnimation}><i class="fas fa-stop"></i><p></p>Stop Simulation<p></p></Button>
+                <form className="PresetForm" onSubmit={this.submitPreset}>
                   <select
                     className="PresentSelect Hidden"
                     name="preset"
@@ -390,14 +390,14 @@ class App extends React.Component {
                         Eureka stars
                       </option>
                     </select>
-                    <Button disabled>Enable Preset</Button>
+                    <Button className="btn-block" disabled>Enable Preset</Button>
                   </form>
                 </div>
             ) : (
               <div className="RightButtons">
                 <Button onClick={this.clearGrid}>Clear Grid</Button>
-                <Button onClick={this.startAnimation}>Start Simulation</Button>
-                <form onSubmit={this.submitPreset}>
+                <Button style={{padding: "40px 0", borderRadius: "40%"}} onClick={this.startAnimation}><i class="fas fa-play"></i><p></p>Start Simulation<p></p></Button>
+                <form className="PresetForm" onSubmit={this.submitPreset}>
                   <select
                   className="PresentSelect"
                     name="preset"
@@ -422,7 +422,7 @@ class App extends React.Component {
                         Eureka stars
                       </option>
                     </select>
-                    <Button>Enable Preset</Button>
+                    <Button className="btn-block">Enable Preset</Button>
                   </form>
                 </div>
             )}
