@@ -91,3 +91,30 @@
   display: flex;
   justify-content: space-evenly
 }
+
+.RulesList {
+  margin: 30px 0;
+}
+
+.ListTitle {
+  margin: 0 0 0 235px;
+  font-weight: 700;
+}
+
+.About1 {
+  display: flex;
+}
+
+.GameDescription {
+  margin: 0 50px;
+}
+
+.ConwayImage {
+  height: auto;
+  width: 200px;
+  border-radius: 15px;
+}
+
+.ConwayImageWrapper {
+  text-align: center;
+}

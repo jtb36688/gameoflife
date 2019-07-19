@@ -7,6 +7,7 @@ import {cellData, gosperGun, flower, eureka, gliderDiamond, shuttle, fireworks} 
 import {
   Button
 } from "reactstrap";
+import Conway from "./Conway.jpg"
 
 class App extends React.Component {
   constructor(props) {
@@ -25,18 +26,20 @@ class App extends React.Component {
   }
 
   startAnimation = () => {
-    let rewind = this.state.cellData.slice();
-    let consolearray = []
-    rewind.forEach((cell, index) => {
-      if (cell) {
-        consolearray.push(index+1)
-      }
-    })
-    console.log(consolearray)
+    if (this.state.currentGeneration == 0) {
+      let rewind = this.state.cellData.slice();
+      let consolearray = []
+      rewind.forEach((cell, index) => {
+        if (cell) {
+          consolearray.push(index+1)
+        }
+      })
+      console.log(consolearray)
+      this.setState({
+        rewind
+      });
+    }
     let nextstate = this.createFrame(this.state.cellData);
-    this.setState({
-      rewind
-    });
     let intervalId = setInterval(() => {
       this.setState(
         currentState => ({
@@ -424,6 +427,36 @@ class App extends React.Component {
                 </div>
             )}
           </div>
+          <div className="Title">
+            About
+          </div>
+            <div className="About1">
+              <p className="GameDescription">Game of Life is a schema developed in 1970 by mathematician John Conway. 
+                Its rules are applied to create what we call a Cellular Automaton, 
+                a fancy word for a grid of cells that cycle through different states over time.
+                It is "Turing Complete", and fully reprogrammable to be used to carry out 
+                any other computable function. <br/>It involves <strong>4 simple rules</strong> which result in wildy differing sequences. 
+                An initial group of live cells can create an unpredictable, chaotic sequence. 
+                Other times, it will create a repeating sequence, such as a glider creation or the flower preset. 
+                Often all cells will quickly die off or stabilize into a still life, like a 2x2 square. </p>
+              <div className="ConwayImageWrapper">
+                <img src={Conway} className="ConwayImage" alt="Image of mathematician John Conway" />
+                <p>John Conway, 2005</p>
+              </div>
+            </div>
+              <ol className="RulesList">
+                
+                <p className="ListTitle">There are four rules for this game:</p>
+                <li>Any live cell with fewer than two live neighbours dies (referred to as underpopulation or exposure[1]).</li>
+                <li>Any live cell with more than three live neighbours dies (referred to as overpopulation or overcrowding).</li>
+                <li>Any live cell with two or three live neighbours lives, unchanged, to the next generation.</li>
+                <li>Any dead cell with exactly three live neighbours will come to life.</li>
+              </ol>
+
+              
+  
+
+
       </div>
     );
   }
