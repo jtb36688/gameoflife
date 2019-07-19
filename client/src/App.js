@@ -149,10 +149,18 @@ class App extends React.Component {
   };
 
   rewindGrid = () => {
-    this.setState(currentState => ({
-      cellData: currentState.rewind,
+    if (this.state.simulating) {
+      clearInterval(this.state.intervalId);
+    }
+    const rewind = this.state.rewind.slice();
+    this.setState({
+      cellData: rewind,
       currentGeneration: 0
-    }))
+    }, () => {
+      if (this.state.simulating) {
+        this.startAnimation()
+      }
+    })
   }
 
   cellStyling = i => {
@@ -199,37 +207,44 @@ class App extends React.Component {
     e.preventDefault()
     if (this.state.preset === "cellData") {
       this.setState({
-        cellData
+        cellData,
+        currentGeneration: 0
       })
     }
     if (this.state.preset === "shuttle") {
       this.setState({
-        cellData: shuttle
+        cellData: shuttle,
+        currentGeneration: 0
       })
     }
     if (this.state.preset === "fireworks") {
       this.setState({
-        cellData: fireworks
+        cellData: fireworks,
+        currentGeneration: 0
       })
     }
     if (this.state.preset === "gosperGun") {
       this.setState({
-        cellData: gosperGun
+        cellData: gosperGun,
+        currentGeneration: 0
       })
     }
     if (this.state.preset == "eureka") {
       this.setState({
-        cellData: eureka
+        cellData: eureka,
+        currentGeneration: 0
       })
     }
     if (this.state.preset == "gliderDiamond") {
       this.setState({
-        cellData: gliderDiamond
+        cellData: gliderDiamond,
+        currentGeneration: 0
       })
     }
     if (this.state.preset == "flower") {
       this.setState({
-        cellData: flower
+        cellData: flower,
+        currentGeneration: 0
       })
     }
   }
@@ -237,11 +252,10 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <div className="InfoRow">
-          {!!this.state.currentGeneration
+        <h1 className="Title">Conway's Game of Life</h1>
+        <p className="SubTitle">{!!this.state.currentGeneration
             ? `Generation ${this.state.currentGeneration}`
-            : "Click cells below or select a preset and start the simulation!"}
-        </div>
+            : "Click cells below or select a preset and start the simulation!"}</p>
         <div className="GameWrapper">
         {!!this.state.simulating ? (
           <div className="LeftButtons">

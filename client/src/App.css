@@ -7,6 +7,24 @@
 
 }
 
+.Title {
+  font-family: Verdana, Geneva, sans-serif; 
+  font-size: 24px; 
+  font-style: normal; 
+  font-variant: normal; 
+  font-weight: 700; 
+  line-height: 26.4px;
+  margin: 40px 0;
+}
+
+.Subtitle {
+  font-family: Verdana, Geneva, sans-serif; 
+  font-size: 18px; 
+  font-style: normal; 
+  font-variant: normal;  
+  line-height: 26.4px;
+}
+
 .Cell {
   height: 14px;
   width: 14px;
