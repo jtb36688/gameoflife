@@ -1,7 +1,10 @@
 .App {
+  width: 1200px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+
 }
 
 .Cell {
@@ -13,7 +16,10 @@
   padding: 0;
 }
 
-.FastForwardInput {
+.GameWrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .GridRow {
@@ -23,4 +29,47 @@
 
 .LiveCell {
   background-color: black;
+}
+
+.LeftButtons {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  height: 500px;
+  justify-content:space-between;
+  align-items: center;
+}
+
+.SpeedSelectorWrapper {
+  display: flex;
+  justify-content: space-evenly
+}
+
+.Hidden {
+  visibility: hidden;
+}
+
+.RightButtons {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  height: 500px;
+  justify-content:space-between;
+}
+
+.FastForwardWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 275px;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 15px;
+  border: 5px solid grey;
+  padding: 50px 20px;
+}
+
+.FFSelectorWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly
 }

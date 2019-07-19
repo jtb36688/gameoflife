@@ -5,18 +5,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Grid from "./components/Grid";
 import {cellData, gosperGun, flower, eureka, gliderDiamond, shuttle, fireworks} from "./defaultdata.js"
 import {
-  Button,
-  InputGroup,
-  Input,
-  InputGroupAddon,
-  InputGroupText
+  Button
 } from "reactstrap";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cellData: gosperGun,
+      cellData,
       rewind: null,
       simulating: false,
       intervalId: null,
@@ -143,13 +139,11 @@ class App extends React.Component {
         currentGeneration: currentState.currentGeneration + frameNum
       }));
       this.setState({
-        ffError: false,
-        frameNum: ""
+        ffError: false
       });
     } else {
       this.setState({
-        ffError: true,
-        frameNum: ""
+        ffError: true
       });
     }
   };
@@ -158,11 +152,7 @@ class App extends React.Component {
     this.setState(currentState => ({
       cellData: currentState.rewind,
       currentGeneration: 0
-    }), () => {
-      this.setState({
-        rewind: null
-      })
-    })
+    }))
   }
 
   cellStyling = i => {
@@ -252,82 +242,174 @@ class App extends React.Component {
             ? `Generation ${this.state.currentGeneration}`
             : "Click cells below or select a preset and start the simulation!"}
         </div>
-        <Grid cellstyling={this.cellStyling} onClick={this.clickCell} />
-        <div className="ButtonRow">
-          {!!this.state.simulating ? (
-            <Button onClick={this.endAnimation}>Stop Simulation</Button>
-          ) : (
-            <Button onClick={this.startAnimation}>Start Simulation</Button>
-          )}
-        </div>
-        {!this.state.simulating && (
-          <div className="ButtonRow2">
-            <InputGroup>
-              <InputGroupAddon addonType="prepend">
-                <InputGroupText>
-                  <Button onClick={this.fastForwardGrid}>Fast Forward</Button>
-                </InputGroupText>
-              </InputGroupAddon>
-              <Input
-                className="FastForwardInput"
-                placeholder="Number of Generations..."
-                name="frameNum"
-                value={this.state.frameNum}
-                onChange={this.handleChanges}
-              />
-            </InputGroup>
-            <Button onClick={this.clearGrid}>Clear Grid</Button>
-            {!!this.state.rewind ? (
-            <Button onClick={this.rewindGrid}>Rewind to Generation 0</Button>
-            ) : (
-            <Button disabled onClick={this.rewindGrid}>Rewind to Generation 0</Button>
-            ) }
-            <div className="SpeedSelectorContainer">
-              <div>
-                <input className="SpeedSelector" type="radio" id="1x" name="simSpeed" value="1000" onChange={this.handleChanges} checked={this.state.simSpeed === '1000'}/>
-                <label>1x</label>
+        <div className="GameWrapper">
+        {!!this.state.simulating ? (
+          <div className="LeftButtons">
+              <div className="FastForwardWrapper">
+                <Button disabled onClick={this.fastForwardGrid}>Fast Forward</Button>
+                <div className="FFSelectorWrapper Hidden">
+                  <div>
+                    <input className="FFSelector" type="radio" name="frameNum" value="1" onChange={this.handleChanges} checked={this.state.frameNum === '1'}/>
+                    <label>1x</label>
+                  </div>
+                  <div>
+                    <input className="FFSelector" type="radio" name="frameNum" value="5" onChange={this.handleChanges} checked={this.state.frameNum === '5'}/>
+                    <label>5x</label>
+                  </div>
+                  <div>
+                    <input className="FFSelector" type="radio" name="frameNum" value="10" onChange={this.handleChanges} checked={this.state.frameNum === '10'}/>
+                    <label>10x</label>
+                  </div>
+                  <div>
+                    <input className="FFSelector" type="radio" name="frameNum" value="20" onChange={this.handleChanges} checked={this.state.frameNum === '20'}/>
+                    <label>20x</label>
+                  </div>
+                </div>
+                {!!this.state.rewind ? (
+              <Button onClick={this.rewindGrid}>Rewind to Generation 0</Button>
+              ) : (
+              <Button disabled onClick={this.rewindGrid}>Rewind to Generation 0</Button>
+              ) }
               </div>
-              <div>
-                <input className="SpeedSelector" type="radio" id="2x" name="simSpeed" value="500" onChange={this.handleChanges} checked={this.state.simSpeed === '500'}/>
-                <label>2x</label>
-              </div>
-              <div>
-                <input className="SpeedSelector" type="radio" id="5x" name="simSpeed" value="200" onChange={this.handleChanges} checked={this.state.simSpeed === '200'}/>
-                <label>5x</label>
-              </div>
-              <div>
-                <input className="SpeedSelector" type="radio" id="10x" name="simSpeed" value="100" onChange={this.handleChanges} checked={this.state.simSpeed === '100'}/>
-                <label>10x</label>
+              
+              <div className="FastForwardWrapper Hidden">
+              Speed of Simulation
+                <div>
+                  <input className="SpeedSelector" type="radio" id="1x" name="simSpeed" value="1000" onChange={this.handleChanges} checked={this.state.simSpeed === '1000'}/>
+                  <label>1x</label>
+                </div>
+                <div>
+                  <input className="SpeedSelector" type="radio" id="2x" name="simSpeed" value="500" onChange={this.handleChanges} checked={this.state.simSpeed === '500'}/>
+                  <label>2x</label>
+                </div>
+                <div>
+                  <input className="SpeedSelector" type="radio" id="5x" name="simSpeed" value="200" onChange={this.handleChanges} checked={this.state.simSpeed === '200'}/>
+                  <label>5x</label>
+                </div>
+                <div>
+                  <input className="SpeedSelector" type="radio" id="10x" name="simSpeed" value="100" onChange={this.handleChanges} checked={this.state.simSpeed === '100'}/>
+                  <label>10x</label>
+                </div>
               </div>
             </div>
-            <form onSubmit={this.submitPreset}>
-              <select
-                name="preset"
-                onChange={this.handleChanges}>
-                  <option value="cellData">Select a preset..</option>
-                  <option value="gosperGun">
-                    Gosper Glider Gun
-                  </option>
-                  <option value="flower">
-                    Flower
-                  </option>
-                  <option value="fireworks">
-                    Fireworks
-                  </option>
-                  <option value="gliderDiamond">
-                    Glider Diamond
-                  </option>
-                  <option value="shuttle">
-                    Glider shuttle
-                  </option>
-                  <option value="eureka">
-                    Eureka stars
-                  </option>
-                </select>
-                <Button>Enable Preset</Button>
-              </form>
-          </div>
+        
+        ) :
+            (<div className="LeftButtons">
+              <div className="FastForwardWrapper">
+                <Button onClick={this.fastForwardGrid}>Fast Forward</Button>
+                <div className="FFSelectorWrapper">
+                  <div>
+                    <input className="FFSelector" type="radio" name="frameNum" value="1" onChange={this.handleChanges} checked={this.state.frameNum === '1'}/>
+                    <label>1x</label>
+                  </div>
+                  <div>
+                    <input className="FFSelector" type="radio" name="frameNum" value="5" onChange={this.handleChanges} checked={this.state.frameNum === '5'}/>
+                    <label>5x</label>
+                  </div>
+                  <div>
+                    <input className="FFSelector" type="radio" name="frameNum" value="10" onChange={this.handleChanges} checked={this.state.frameNum === '10'}/>
+                    <label>10x</label>
+                  </div>
+                  <div>
+                    <input className="FFSelector" type="radio" name="frameNum" value="20" onChange={this.handleChanges} checked={this.state.frameNum === '20'}/>
+                    <label>20x</label>
+                  </div>
+                </div>
+                {!!this.state.rewind ? (
+              <Button onClick={this.rewindGrid}>Rewind to Generation 0</Button>
+              ) : (
+              <Button disabled onClick={this.rewindGrid}>Rewind to Generation 0</Button>
+              ) }
+              </div>
+              
+              <div className="FastForwardWrapper">
+              Speed of Simulation
+                <div>
+                  <input className="SpeedSelector" type="radio" id="1x" name="simSpeed" value="1000" onChange={this.handleChanges} checked={this.state.simSpeed === '1000'}/>
+                  <label>1x</label>
+                </div>
+                <div>
+                  <input className="SpeedSelector" type="radio" id="2x" name="simSpeed" value="500" onChange={this.handleChanges} checked={this.state.simSpeed === '500'}/>
+                  <label>2x</label>
+                </div>
+                <div>
+                  <input className="SpeedSelector" type="radio" id="5x" name="simSpeed" value="200" onChange={this.handleChanges} checked={this.state.simSpeed === '200'}/>
+                  <label>5x</label>
+                </div>
+                <div>
+                  <input className="SpeedSelector" type="radio" id="10x" name="simSpeed" value="100" onChange={this.handleChanges} checked={this.state.simSpeed === '100'}/>
+                  <label>10x</label>
+                </div>
+              </div>
+            </div>
         )}
+          <Grid cellstyling={this.cellStyling} onClick={this.clickCell} />
+            {!!this.state.simulating ? (
+              <div className="RightButtons">
+              <Button disabled onClick={this.clearGrid}>Clear Grid</Button>
+                <Button onClick={this.endAnimation}>Stop Simulation</Button>
+                <form onSubmit={this.submitPreset}>
+                  <select
+                    className="PresentSelect Hidden"
+                    name="preset"
+                    onChange={this.handleChanges}>
+                      <option value="cellData">Select a preset..</option>
+                      <option value="gosperGun">
+                        Gosper Glider Gun
+                      </option>
+                      <option value="flower">
+                        Flower
+                      </option>
+                      <option value="fireworks">
+                        Fireworks
+                      </option>
+                      <option value="gliderDiamond">
+                        Glider Diamond
+                      </option>
+                      <option value="shuttle">
+                        Glider shuttle
+                      </option>
+                      <option value="eureka">
+                        Eureka stars
+                      </option>
+                    </select>
+                    <Button disabled>Enable Preset</Button>
+                  </form>
+                </div>
+            ) : (
+              <div className="RightButtons">
+                <Button onClick={this.clearGrid}>Clear Grid</Button>
+                <Button onClick={this.startAnimation}>Start Simulation</Button>
+                <form onSubmit={this.submitPreset}>
+                  <select
+                  className="PresentSelect"
+                    name="preset"
+                    onChange={this.handleChanges}>
+                      <option value="cellData">Select a preset..</option>
+                      <option value="gosperGun">
+                        Gosper Glider Gun
+                      </option>
+                      <option value="flower">
+                        Flower
+                      </option>
+                      <option value="fireworks">
+                        Fireworks
+                      </option>
+                      <option value="gliderDiamond">
+                        Glider Diamond
+                      </option>
+                      <option value="shuttle">
+                        Glider shuttle
+                      </option>
+                      <option value="eureka">
+                        Eureka stars
+                      </option>
+                    </select>
+                    <Button>Enable Preset</Button>
+                  </form>
+                </div>
+            )}
+          </div>
       </div>
     );
   }
