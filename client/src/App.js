@@ -263,7 +263,7 @@ class App extends React.Component {
         {!!this.state.simulating ? (
           <div className="LeftButtons">
               <div className="FastForwardWrapper">
-                <Button disabled style={{width: "220px", display: "flex", justifyContent: "space-evenly", alignItems: "baseline"}} onClick={this.fastForwardGrid}><i class="fas fa-fast-forward"></i>Fast Forward</Button>
+                <Button disabled style={{width: "150px", display: "flex", justifyContent: "space-evenly", alignItems: "baseline"}} onClick={this.fastForwardGrid}><i class="fas fa-fast-forward"></i>Fast Forward</Button>
                 <div className="FFSelectorWrapper Hidden">
                   <div>
                     <input className="FFSelector" type="radio" name="frameNum" value="1" onChange={this.handleChanges} checked={this.state.frameNum === '1'}/>
@@ -283,9 +283,9 @@ class App extends React.Component {
                   </div>
                 </div>
                 {!!this.state.rewind ? (
-              <Button style={{width: "220px", display: "flex", justifyContent: "space-evenly", alignItems: "baseline"}} onClick={this.rewindGrid}><i class="fas fa-fast-backward"></i>Rewind to Start</Button>
+              <Button style={{width: "150px", display: "flex", justifyContent: "space-evenly", alignItems: "baseline"}} onClick={this.rewindGrid}><i class="fas fa-fast-backward"></i>Rewind</Button>
               ) : (
-              <Button style={{width: "220px", display: "flex", justifyContent: "space-evenly", alignItems: "baseline"}} disabled onClick={this.rewindGrid}><i class="fas fa-fast-backward"></i>Rewind to Start</Button>
+              <Button style={{width: "150px", display: "flex", justifyContent: "space-evenly", alignItems: "baseline"}} disabled onClick={this.rewindGrid}><i class="fas fa-fast-backward"></i>Rewind</Button>
               ) }
               </div>
               
@@ -313,7 +313,7 @@ class App extends React.Component {
         ) :
             (<div className="LeftButtons">
               <div className="FastForwardWrapper">
-                <Button style={{width: "220px", display: "flex", justifyContent: "space-evenly", alignItems: "baseline"}} onClick={this.fastForwardGrid}><i class="fas fa-fast-forward"></i>Fast Forward</Button>
+                <Button style={{width: "150px", display: "flex", justifyContent: "space-evenly", alignItems: "baseline"}} onClick={this.fastForwardGrid}><i class="fas fa-fast-forward"></i>Fast Forward</Button>
                 <div className="FFSelectorWrapper">
                   <div>
                     <input className="FFSelector" type="radio" name="frameNum" value="1" onChange={this.handleChanges} checked={this.state.frameNum === '1'}/>
@@ -333,14 +333,14 @@ class App extends React.Component {
                   </div>
                 </div>
                 {!!this.state.rewind ? (
-              <Button style={{width: "220px", display: "flex", justifyContent: "space-evenly", alignItems: "baseline"}} onClick={this.rewindGrid}><i class="fas fa-fast-backward"></i>Rewind to Start</Button>
+              <Button style={{width: "150px", display: "flex", justifyContent: "space-evenly", alignItems: "baseline"}} onClick={this.rewindGrid}><i class="fas fa-fast-backward"></i>Rewind</Button>
               ) : (
-              <Button style={{width: "220px", display: "flex", justifyContent: "space-evenly", alignItems: "baseline"}} disabled onClick={this.rewindGrid}><i class="fas fa-fast-backward"></i>Rewind to Start</Button>
+              <Button style={{width: "150px", display: "flex", justifyContent: "space-evenly", alignItems: "baseline"}} disabled onClick={this.rewindGrid}><i class="fas fa-fast-backward"></i>Rewind</Button>
               ) }
               </div>
               
               <div className="FastForwardWrapper">
-              Speed of Simulation
+              Simulation Speed
                 <div>
                   <input className="SpeedSelector" type="radio" id="1x" name="simSpeed" value="1000" onChange={this.handleChanges} checked={this.state.simSpeed === '1000'}/>
                   <label>1x</label>
@@ -384,10 +384,10 @@ class App extends React.Component {
                         Glider Diamond
                       </option>
                       <option value="shuttle">
-                        Glider shuttle
+                        Glider Shuttle
                       </option>
                       <option value="eureka">
-                        Eureka stars
+                        Eureka Stars
                       </option>
                     </select>
                     <Button className="btn-block" disabled>Enable Preset</Button>
@@ -427,6 +427,14 @@ class App extends React.Component {
                 </div>
             )}
           </div>
+          <ol className="RulesList">
+                
+                <p className="ListTitle">There are four rules for this game:</p>
+                <li>Any live cell with fewer than two live neighbours dies (referred to as underpopulation or exposure[1]).</li>
+                <li>Any live cell with more than three live neighbours dies (referred to as overpopulation or overcrowding).</li>
+                <li>Any live cell with two or three live neighbours lives, unchanged, to the next generation.</li>
+                <li>Any dead cell with exactly three live neighbours will come to life.</li>
+              </ol>
           <div className="Title">
             About
           </div>
@@ -444,16 +452,12 @@ class App extends React.Component {
                 <p>John Conway, 2005</p>
               </div>
             </div>
-              <ol className="RulesList">
-                
-                <p className="ListTitle">There are four rules for this game:</p>
-                <li>Any live cell with fewer than two live neighbours dies (referred to as underpopulation or exposure[1]).</li>
-                <li>Any live cell with more than three live neighbours dies (referred to as overpopulation or overcrowding).</li>
-                <li>Any live cell with two or three live neighbours lives, unchanged, to the next generation.</li>
-                <li>Any dead cell with exactly three live neighbours will come to life.</li>
-              </ol>
-
               
+
+              <footer className="FooterContent">
+                <p>Created by Jacob Bryan as part of his <strong>Lambda School CS Build Week</strong>.</p>
+                <p>Favicon provided by Carol Liao at <a href="https://www.toicon.com/">https://www.toicon.com/</a></p>
+              </footer>
   
 
 
