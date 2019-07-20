@@ -28,13 +28,6 @@ class App extends React.Component {
   startAnimation = () => {
     if (this.state.currentGeneration == 0) {
       let rewind = this.state.cellData.slice();
-      let consolearray = []
-      rewind.forEach((cell, index) => {
-        if (cell) {
-          consolearray.push(index+1)
-        }
-      })
-      console.log(consolearray)
       this.setState({
         rewind
       });
@@ -181,7 +174,6 @@ class App extends React.Component {
           currentGeneration: 0
         });
       }
-      console.log(`Cell ${i}`);
       const changedstate = this.state.cellData.slice();
       changedstate[i] = !changedstate[i];
       this.setState({
@@ -203,11 +195,15 @@ class App extends React.Component {
     this.setState({
       [e.target.name]: e.target.value
     });
-    console.log(this.state.preset)
+  };
+
+  handleChangesPreset = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    }, () => {this.submitPreset()});
   };
 
   submitPreset = e => {
-    e.preventDefault()
     if (this.state.preset === "cellData") {
       this.setState({
         cellData,
@@ -365,11 +361,11 @@ class App extends React.Component {
               <div className="RightButtons">
               <Button disabled style={{display: "flex", justifyContent: "space-evenly", alignItems: "baseline"}} onClick={this.clearGrid}><i class="fas fa-times"></i>Clear Grid</Button>
                 <Button style={{padding: "40px 0", borderRadius: "40%"}} className="StartStopButton" onClick={this.endAnimation}><i class="fas fa-stop"></i><p></p>Stop Simulation<p></p></Button>
-                <form className="PresetForm" onSubmit={this.submitPreset}>
+                <div className="PresetForm">
                   <select
-                    className="PresentSelect Hidden"
+                    className="PresetSelect Hidden"
                     name="preset"
-                    onChange={this.handleChanges}>
+                    onChange={this.handleChangesPreset}>
                       <option value="cellData">Select a preset..</option>
                       <option value="gosperGun">
                         Gosper Glider Gun
@@ -390,18 +386,17 @@ class App extends React.Component {
                         Eureka Stars
                       </option>
                     </select>
-                    <Button className="btn-block" disabled>Enable Preset</Button>
-                  </form>
+                  </div>
                 </div>
             ) : (
               <div className="RightButtons">
                 <Button style={{display: "flex", justifyContent: "space-evenly", alignItems: "baseline"}} onClick={this.clearGrid}><i class="fas fa-times"></i> Clear Grid</Button>
                 <Button style={{padding: "40px 0", borderRadius: "40%"}} onClick={this.startAnimation}><i class="fas fa-play"></i><p></p>Start Simulation<p></p></Button>
-                <form className="PresetForm" onSubmit={this.submitPreset}>
+                <div className="PresetForm">
                   <select
-                  className="PresentSelect"
+                    className="PresetSelect"
                     name="preset"
-                    onChange={this.handleChanges}>
+                    onChange={this.handleChangesPreset}>
                       <option value="cellData">Select a preset..</option>
                       <option value="gosperGun">
                         Gosper Glider Gun
@@ -416,14 +411,13 @@ class App extends React.Component {
                         Glider Diamond
                       </option>
                       <option value="shuttle">
-                        Glider shuttle
+                        Glider Shuttle
                       </option>
                       <option value="eureka">
-                        Eureka stars
+                        Eureka Stars
                       </option>
                     </select>
-                    <Button className="btn-block">Enable Preset</Button>
-                  </form>
+                  </div>
                 </div>
             )}
           </div>
